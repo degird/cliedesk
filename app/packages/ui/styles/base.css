@@ -1,0 +1,57 @@
+/* Base element styles for /dash (logical properties only, so RTL needs no separate stylesheet). */
+
+.cliedesk-html {
+	font-size: calc(16px * var(--cd-font-scale));
+	background: var(--cd-bg);
+}
+
+.cliedesk-app {
+	min-height: 100%;
+	margin: 0;
+	background: var(--cd-bg);
+	color: var(--cd-text);
+	font-family: var(--cd-font);
+	font-size: 0.875rem;
+	line-height: 1.4286;
+	-webkit-font-smoothing: antialiased;
+}
+
+.cliedesk-app :focus-visible {
+	outline: 2px solid var(--cd-focus);
+	outline-offset: 2px;
+}
+
+.cliedesk-app [data-focus-visible] {
+	outline: 2px solid var(--cd-focus);
+	outline-offset: 2px;
+}
+
+.cliedesk-app :where(a, button, input, select, textarea, [tabindex]) {
+	scroll-margin-block: calc(var(--cd-topbar-h) + 0.5rem);
+}
+
+.cliedesk-app .cd-tabular {
+	font-variant-numeric: tabular-nums;
+}
+
+@media (forced-colors: active) {
+
+	.cliedesk-app :focus-visible,
+	.cliedesk-app [data-focus-visible] {
+		outline-color: Highlight;
+	}
+
+	.cliedesk-app button,
+	.cliedesk-app [role="button"] {
+		border: 1px solid ButtonText;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+	.cliedesk-app *,
+	.cliedesk-app *::before,
+	.cliedesk-app *::after {
+		scroll-behavior: auto;
+	}
+}

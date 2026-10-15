@@ -1,0 +1,16 @@
+/*
+ * /dash app stylesheet → build/app.css. Tailwind v4 (build time) over the --cd-* tokens.
+ * Only app sources are scanned; the CSS is loaded on /dash only (never in wp-admin or on the site).
+ */
+@layer theme, base, components, utilities;
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+@import "../packages/ui/styles/tokens.css" layer(theme);
+@import "../packages/ui/styles/theme.css";
+@import "../packages/ui/styles/base.css" layer(base);
+@source "../packages";
+
+/* INB-28: focus mode hides the main navigation while a live chat is open. */
+[data-cd-focus] [data-cd-rail] {
+	display: none;
+}

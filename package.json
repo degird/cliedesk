@@ -1,0 +1,39 @@
+{
+  "name": "cliedesk",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Source code of the JavaScript in the Cliedesk WordPress plugin (the /dash app and the chat widget).",
+  "license": "GPL-2.0-or-later",
+  "homepage": "https://wordpress.org/plugins/cliedesk/",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "wp-scripts build",
+    "start": "wp-scripts start",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.104.1",
+    "@tanstack/react-router": "^1.170.41",
+    "@wordpress/api-fetch": "^7.56.0",
+    "@wordpress/dom-ready": "^4.56.0",
+    "@wordpress/hooks": "^4.56.0",
+    "@wordpress/i18n": "^6.29.0",
+    "@wordpress/url": "^4.56.0",
+    "lucide-react": "^1.50.0",
+    "preact": "^10.29.8",
+    "react-aria-components": "^1.21.1",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^36.0.0",
+    "@tailwindcss/postcss": "^4.3.3",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~6.0.3",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}

@@ -1,0 +1,118 @@
+/*
+ * Tailwind v4 theme mapped onto the --cd-* tokens (plan.frontend-ux.md §7.1). Utilities resolve to the tokens at
+ * run time, so they follow light/dark, density and runtime accents without a rebuild. The default Tailwind palette
+ * is not loaded: only token-backed utilities exist (no primitive colours or hex values in components).
+ */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme inline {
+	--*: initial;
+	--color-canvas: var(--cd-bg);
+	--color-surface: var(--cd-surface);
+	--color-raised: var(--cd-surface-raised);
+	--color-sunken: var(--cd-surface-sunken);
+	--color-selected: var(--cd-surface-selected);
+	--color-overlay: var(--cd-overlay);
+	--color-line: var(--cd-border);
+	--color-line-strong: var(--cd-border-strong);
+	--color-fg: var(--cd-text);
+	--color-fg-muted: var(--cd-text-muted);
+	--color-fg-subtle: var(--cd-text-subtle);
+	--color-fg-disabled: var(--cd-text-disabled);
+	--color-on-accent: var(--cd-text-on-accent);
+	--color-accent: var(--cd-accent);
+	--color-accent-hover: var(--cd-accent-hover);
+	--color-accent-active: var(--cd-accent-active);
+	--color-accent-fg: var(--cd-accent-text);
+	--color-accent-subtle: var(--cd-accent-subtle);
+	--color-accent-subtle-hover: var(--cd-accent-subtle-hover);
+	--color-focus: var(--cd-focus);
+	--color-pro: var(--cd-pro-bg);
+	--color-pro-fg: var(--cd-pro-text);
+	--color-success: var(--cd-success);
+	--color-success-solid: var(--cd-success-solid);
+	--color-success-subtle: var(--cd-success-subtle);
+	--color-success-line: var(--cd-success-border);
+	--color-warning: var(--cd-warning);
+	--color-warning-solid: var(--cd-warning-solid);
+	--color-warning-subtle: var(--cd-warning-subtle);
+	--color-warning-line: var(--cd-warning-border);
+	--color-danger: var(--cd-danger);
+	--color-danger-solid: var(--cd-danger-solid);
+	--color-danger-subtle: var(--cd-danger-subtle);
+	--color-danger-line: var(--cd-danger-border);
+	--color-info: var(--cd-info);
+	--color-info-solid: var(--cd-info-solid);
+	--color-info-subtle: var(--cd-info-subtle);
+	--color-info-line: var(--cd-info-border);
+	--color-transparent: transparent;
+	--color-current: currentcolor;
+
+	--font-sans: var(--cd-font);
+	--font-mono: var(--cd-font-mono);
+
+	--spacing: var(--cd-space);
+
+	--text-xs: 0.75rem;
+	--text-xs--line-height: 1rem;
+	--text-sm: 0.8125rem;
+	--text-sm--line-height: 1.25rem;
+	--text-base: 0.875rem;
+	--text-base--line-height: 1.25rem;
+	--text-md: 0.9375rem;
+	--text-md--line-height: 1.375rem;
+	--text-lg: 1rem;
+	--text-lg--line-height: 1.5rem;
+	--text-xl: 1.125rem;
+	--text-xl--line-height: 1.625rem;
+	--text-2xl: 1.25rem;
+	--text-2xl--line-height: 1.75rem;
+	--text-3xl: 1.5rem;
+	--text-3xl--line-height: 2rem;
+	--text-4xl: 1.875rem;
+	--text-4xl--line-height: 2.25rem;
+
+	--font-weight-normal: 400;
+	--font-weight-medium: 500;
+	--font-weight-semibold: 600;
+	--font-weight-bold: 700;
+
+	--radius-xs: var(--cd-radius-xs);
+	--radius-sm: var(--cd-radius-sm);
+	--radius-md: var(--cd-radius-md);
+	--radius-lg: var(--cd-radius-lg);
+	--radius-xl: var(--cd-radius-xl);
+	--radius-full: var(--cd-radius-full);
+
+	--shadow-1: var(--cd-shadow-1);
+	--shadow-2: var(--cd-shadow-2);
+	--shadow-3: var(--cd-shadow-3);
+
+	--ease-out: var(--cd-ease);
+	--ease-in: var(--cd-ease-exit);
+	--default-transition-duration: var(--cd-duration);
+	--default-transition-timing-function: var(--cd-ease);
+
+	--breakpoint-sm: 40rem;
+	--breakpoint-md: 48rem;
+	--breakpoint-lg: 64rem;
+	--breakpoint-xl: 80rem;
+	--breakpoint-2xl: 96rem;
+
+	--animate-spin: spin 0.8s linear infinite;
+	--animate-pulse: pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes spin {
+
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes pulse {
+
+	50% {
+		opacity: 0.5;
+	}
+}

@@ -1,0 +1,967 @@
+/*
+ * Public pages (PRT-29) → build/public.css: the app's sign-in page (/dash/login) and the full-screen customer portal
+ * (/support). Plain CSS over the same --cd-* tokens as /dash (light and dark through data-theme on <html>), so the
+ * customer side looks like the helpdesk without loading its UI kit. Logical properties only (RTL needs nothing more).
+ */
+@import "../packages/ui/styles/tokens.css";
+
+.cliedesk-html {
+	background: var(--cd-bg);
+}
+
+.cdx-auth,
+.cdx-portal {
+	margin: 0;
+	min-height: 100dvh;
+	background: var(--cd-bg);
+	color: var(--cd-text);
+	font-family: var(--cd-font);
+	font-size: 0.875rem;
+	line-height: 1.45;
+	-webkit-font-smoothing: antialiased;
+}
+
+:is(.cdx-auth, .cdx-portal) *,
+:is(.cdx-auth, .cdx-portal) *::before,
+:is(.cdx-auth, .cdx-portal) *::after {
+	box-sizing: border-box;
+}
+
+:where(.cdx-auth, .cdx-portal) :where(h1, h2, h3, p, ul, dl, dd) {
+	margin: 0;
+}
+
+/* :where() keeps these defaults at the lowest specificity, so every component class wins over them. */
+:where(.cdx-auth, .cdx-portal) a {
+	color: var(--cd-accent-text);
+	text-decoration: none;
+}
+
+:where(.cdx-auth, .cdx-portal) a:hover {
+	text-decoration: underline;
+}
+
+:is(.cdx-auth, .cdx-portal) :focus-visible {
+	outline: 2px solid var(--cd-focus);
+	outline-offset: 2px;
+}
+
+/* Controls (the portal's own forms are plain elements: styled here, never by the theme). */
+:is(.cdx-auth, .cdx-portal) :is(input:not([type="checkbox"], [type="radio"], [type="file"]), select, textarea),
+.cdx-input {
+	width: 100%;
+	min-height: 2.5rem;
+	padding: 0.5rem 0.75rem;
+	border: 1px solid var(--cd-border-strong);
+	border-radius: 0.5rem;
+	background: var(--cd-surface);
+	color: var(--cd-text);
+	font: inherit;
+}
+
+.cdx-portal textarea {
+	min-height: 6rem;
+	resize: vertical;
+}
+
+:is(.cdx-auth, .cdx-portal) :is(input, select, textarea):focus-visible {
+	outline: 2px solid var(--cd-focus);
+	outline-offset: 1px;
+}
+
+:is(.cdx-auth, .cdx-portal) [aria-invalid="true"] {
+	border-color: var(--cd-danger);
+}
+
+:is(.cdx-auth, .cdx-portal) input[type="checkbox"] {
+	accent-color: var(--cd-accent);
+	inline-size: 1rem;
+	block-size: 1rem;
+}
+
+.cdx-portal label {
+	display: block;
+	margin-block-end: 0.375rem;
+	font-weight: 600;
+}
+
+:where(.cdx-portal) button,
+.cdx-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.375rem;
+	min-height: 2.25rem;
+	padding: 0 0.875rem;
+	border: 1px solid var(--cd-border-strong);
+	border-radius: 0.5rem;
+	background: var(--cd-surface);
+	color: var(--cd-text);
+	font: inherit;
+	font-weight: 600;
+	text-decoration: none;
+	white-space: nowrap;
+	cursor: pointer;
+}
+
+:where(.cdx-portal) button:hover,
+.cdx-btn:hover {
+	background: var(--cd-surface-sunken);
+	text-decoration: none;
+}
+
+.cdx-portal button:disabled {
+	cursor: not-allowed;
+	opacity: 0.6;
+}
+
+/* Primary actions: the form's submit, Mark as solved, New request. */
+.cdx-btn-primary,
+.cdx-portal :is(form button[type="submit"], .cdp-bar button) {
+	border-color: var(--cd-accent);
+	background: var(--cd-accent);
+	color: var(--cd-text-on-accent);
+}
+
+.cdx-btn-primary:hover,
+.cdx-portal :is(form button[type="submit"], .cdp-bar button):hover {
+	background: var(--cd-accent-hover);
+	color: var(--cd-text-on-accent);
+}
+
+.cdx-btn-block {
+	width: 100%;
+}
+
+.cdx-ico {
+	inline-size: 1.25rem;
+	block-size: 1.25rem;
+	flex: none;
+	fill: none;
+	stroke: currentcolor;
+	stroke-width: 1.8;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+.cdx-btn .cdx-ico {
+	inline-size: 1rem;
+	block-size: 1rem;
+}
+
+.cdx-alert {
+	padding: 0.625rem 0.75rem;
+	border: 1px solid var(--cd-danger-border);
+	border-radius: 0.5rem;
+	background: var(--cd-danger-subtle);
+}
+
+.cdx-alert-ok {
+	border-color: var(--cd-success-border);
+	background: var(--cd-success-subtle);
+}
+
+.cdx-or {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	margin-block: 1.25rem;
+	color: var(--cd-text-subtle);
+	font-size: 0.75rem;
+}
+
+.cdx-or::before,
+.cdx-or::after {
+	content: "";
+	flex: 1;
+	block-size: 1px;
+	background: var(--cd-border);
+}
+
+.cdx-stack {
+	display: grid;
+	gap: 1rem;
+	align-content: start;
+}
+
+/* ----- Sign-in page ----- */
+.cdx-auth-main {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-height: 100dvh;
+	padding: 2.5rem 1rem;
+	background: radial-gradient(60rem 40rem at 50% -10%, color-mix(in oklab, var(--cd-accent) 14%, transparent), transparent);
+}
+
+.cdx-brand {
+	display: flex;
+	align-items: center;
+	gap: 0.625rem;
+	margin-block-end: 1.5rem;
+}
+
+.cdx-brand-mark {
+	display: grid;
+	place-items: center;
+	inline-size: 2.25rem;
+	block-size: 2.25rem;
+	border-radius: 0.625rem;
+	background: var(--cd-accent);
+	color: var(--cd-text-on-accent);
+	font-weight: 700;
+}
+
+.cdx-brand-logo {
+	max-block-size: 2.5rem;
+	inline-size: auto;
+}
+
+.cdx-brand-name {
+	font-size: 1.125rem;
+	font-weight: 650;
+}
+
+.cdx-card {
+	border: 1px solid var(--cd-border);
+	border-radius: 0.75rem;
+	background: var(--cd-surface-raised);
+	box-shadow: var(--cd-shadow-1);
+}
+
+.cdx-auth .cdx-card {
+	inline-size: 100%;
+	max-inline-size: 25rem;
+	padding: 1.75rem;
+	box-shadow: var(--cd-shadow-2);
+}
+
+.cdx-card h1 {
+	font-size: 1.3125rem;
+	letter-spacing: -0.01em;
+}
+
+.cdx-sub {
+	margin-block-start: 0.375rem;
+	color: var(--cd-text-muted);
+}
+
+.cdx-form {
+	display: grid;
+	gap: 0.875rem;
+	margin-block-start: 1.25rem;
+}
+
+.cdx-field {
+	display: grid;
+	gap: 0.375rem;
+	font-weight: 600;
+}
+
+.cdx-inline {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.5rem;
+	flex-wrap: wrap;
+}
+
+.cdx-check {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	color: var(--cd-text-muted);
+	font-weight: 400;
+}
+
+.cdx-auth .cdx-btn {
+	inline-size: 100%;
+	min-height: 2.5rem;
+}
+
+.cdx-auth .cdx-stack {
+	display: grid;
+	gap: 0.5rem;
+}
+
+.cdx-foot {
+	margin-block-start: 1.25rem;
+	color: var(--cd-text-muted);
+	text-align: center;
+}
+
+/* ----- Full-screen portal: shell (the /dash rail and top bar) ----- */
+.cliedesk-portal {
+	display: contents;
+}
+
+.cdx-shell {
+	display: flex;
+	min-height: 100dvh;
+}
+
+.cdx-rail {
+	position: sticky;
+	inset-block-start: 0;
+	display: flex;
+	flex: none;
+	flex-direction: column;
+	gap: 0.125rem;
+	inline-size: var(--cd-rail-w);
+	block-size: 100dvh;
+	padding: 0.5rem 0.25rem;
+	border-inline-end: 1px solid var(--cd-border);
+	background: var(--cd-surface);
+}
+
+.cdx-rail-brand {
+	display: grid;
+	place-items: center;
+	inline-size: 2.25rem;
+	block-size: 2.25rem;
+	margin: 0.25rem auto 0.75rem;
+	overflow: hidden;
+	border-radius: 0.625rem;
+	background: var(--cd-accent);
+	color: var(--cd-text-on-accent);
+	font-weight: 700;
+}
+
+.cdx-rail-brand:hover {
+	text-decoration: none;
+}
+
+.cdx-rail-brand img {
+	inline-size: 100%;
+	block-size: 100%;
+	object-fit: contain;
+	background: var(--cd-surface);
+}
+
+.cdx-rail-item {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.125rem;
+	padding: 0.4375rem 0.125rem 0.375rem;
+	border-radius: 0.5rem;
+	color: var(--cd-text-muted);
+	font-size: 0.6875rem;
+	font-weight: 500;
+	text-align: center;
+}
+
+/* Up to two lines ("New request"), then an ellipsis. */
+.cdx-rail-item span {
+	display: -webkit-box;
+	max-inline-size: 100%;
+	overflow: hidden;
+	line-height: 1.2;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	line-clamp: 2;
+}
+
+.cdx-portal .cdx-rail-item:hover {
+	background: var(--cd-surface-sunken);
+	color: var(--cd-text);
+	text-decoration: none;
+}
+
+.cdx-rail-item[aria-current="page"] {
+	background: var(--cd-accent-subtle);
+	color: var(--cd-accent-text);
+}
+
+.cdx-col {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	min-inline-size: 0;
+}
+
+.cdx-top {
+	position: sticky;
+	inset-block-start: 0;
+	z-index: 5;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	block-size: var(--cd-topbar-h);
+	padding-inline: 1.25rem;
+	border-block-end: 1px solid var(--cd-border);
+	background: var(--cd-surface);
+}
+
+.cdx-top-name {
+	margin-inline-end: auto;
+	font-weight: 650;
+}
+
+.cdx-portal .cdx-iconbtn {
+	inline-size: 2.25rem;
+	min-height: 2.25rem;
+	padding: 0;
+	border-color: transparent;
+	background: none;
+	color: var(--cd-text-muted);
+}
+
+.cdx-avatar {
+	display: grid;
+	place-items: center;
+	inline-size: 2rem;
+	block-size: 2rem;
+	border-radius: 50%;
+	background: var(--cd-accent-subtle);
+	color: var(--cd-accent-text);
+	font-weight: 650;
+}
+
+.cdx-portal .cdx-avatar:hover {
+	text-decoration: none;
+}
+
+.cdx-main {
+	inline-size: 100%;
+	max-inline-size: 75rem;
+	margin-inline: auto;
+	padding: 1.5rem;
+}
+
+.cdx-main > * + * {
+	margin-block-start: 1rem;
+}
+
+/* ----- Portal: page parts ----- */
+.cdx-head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 0.75rem;
+	margin-block-end: 1.25rem;
+}
+
+.cdx-card-head h2 {
+	font-size: 0.875rem;
+}
+
+.cdx-head h1,
+.cdx-main > section > h2:first-child {
+	font-size: 1.375rem;
+	letter-spacing: -0.01em;
+}
+
+.cdx-head p {
+	margin-block-start: 0.25rem;
+	color: var(--cd-text-muted);
+}
+
+.cdx-card-pad {
+	padding: 1rem;
+}
+
+.cdx-card-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.5rem;
+	padding: 0.875rem 1rem;
+	border-block-end: 1px solid var(--cd-border);
+}
+
+.cdx-stats {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 0.75rem;
+	margin-block-end: 1rem;
+}
+
+.cdx-stat {
+	display: grid;
+	gap: 0.25rem;
+	padding: 0.875rem 1rem;
+}
+
+.cdx-stat-label {
+	color: var(--cd-text-muted);
+	font-size: 0.8125rem;
+}
+
+.cdx-stat-value {
+	font-size: 1.625rem;
+	font-weight: 650;
+	font-variant-numeric: tabular-nums;
+}
+
+.cdx-stat.is-waiting .cdx-stat-label {
+	color: var(--cd-warning);
+}
+
+.cdx-stat.is-resolved .cdx-stat-label {
+	color: var(--cd-success);
+}
+
+.cdx-split {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) 21rem;
+	gap: 1rem;
+	align-items: start;
+}
+
+.cdx-rows {
+	padding: 0;
+	list-style: none;
+}
+
+.cdx-rows li + li {
+	border-block-start: 1px solid var(--cd-border);
+}
+
+.cdx-row {
+	display: grid;
+	grid-template-columns: 0.5rem minmax(0, 1fr) auto;
+	gap: 0.125rem 0.625rem;
+	padding: 0.75rem 1rem;
+	color: var(--cd-text);
+}
+
+.cdx-portal .cdx-row:hover {
+	background: var(--cd-surface-sunken);
+	text-decoration: none;
+}
+
+.cdx-dot {
+	inline-size: 0.5rem;
+	block-size: 0.5rem;
+	margin-block-start: 0.375rem;
+	border-radius: 50%;
+}
+
+.cdx-dot.is-on {
+	background: var(--cd-accent);
+}
+
+.cdx-row-title {
+	overflow: hidden;
+	font-weight: 600;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.cdx-row-meta {
+	grid-column: 2;
+	color: var(--cd-text-muted);
+	font-size: 0.8125rem;
+}
+
+.cdx-row-end {
+	display: flex;
+	flex-direction: column;
+	grid-column: 3;
+	grid-row: 1 / 3;
+	align-items: flex-end;
+	gap: 0.375rem;
+	color: var(--cd-text-subtle);
+	font-size: 0.75rem;
+}
+
+.cdx-empty {
+	padding: 1rem;
+	color: var(--cd-text-muted);
+}
+
+.cdx-bars {
+	display: grid;
+	gap: 0.875rem;
+	padding: 1rem;
+	list-style: none;
+}
+
+.cdx-bars-label {
+	display: flex;
+	justify-content: space-between;
+	gap: 0.5rem;
+	margin-block-end: 0.375rem;
+}
+
+.cdx-bars-label span + span {
+	color: var(--cd-text-subtle);
+	font-size: 0.75rem;
+}
+
+.cdx-bar {
+	display: flex;
+	block-size: 0.5rem;
+	overflow: hidden;
+	border-radius: 0.25rem;
+	background: var(--cd-surface-sunken);
+}
+
+.cdx-bar i {
+	display: block;
+}
+
+.cdx-bar .is-open {
+	background: var(--cd-accent);
+}
+
+.cdx-bar .is-waiting {
+	background: var(--cd-warning);
+}
+
+.cdx-bar .is-resolved {
+	background: var(--cd-success);
+}
+
+.cdx-props {
+	display: grid;
+	grid-template-columns: 7rem minmax(0, 1fr);
+	gap: 0.625rem 0.5rem;
+}
+
+.cdx-props dt {
+	color: var(--cd-text-muted);
+}
+
+.cdx-signin {
+	max-inline-size: 26rem;
+	margin: 3rem auto 0;
+	padding: 1.75rem;
+}
+
+.cdx-signin > * + * {
+	margin-block-start: 0.875rem;
+}
+
+.cdx-signin-new {
+	text-align: center;
+}
+
+/* ----- Portal: the shared views (list, request, new request, code, help, orders) in the app's look ----- */
+.cdx-portal .cdp-status {
+	display: inline-flex;
+	align-items: center;
+	padding: 0 0.5rem;
+	border-radius: 999px;
+	background: var(--cd-surface-sunken);
+	color: var(--cd-text-muted);
+	font-size: 0.75rem;
+	font-weight: 600;
+	line-height: 1.6667;
+	white-space: nowrap;
+}
+
+.cdx-portal .cdp-status-open {
+	background: var(--cd-accent-subtle);
+	color: var(--cd-accent-text);
+}
+
+.cdx-portal .cdp-status-waiting {
+	background: var(--cd-warning-subtle);
+	color: var(--cd-warning);
+}
+
+.cdx-portal .cdp-status-closed {
+	background: var(--cd-success-subtle);
+	color: var(--cd-success);
+}
+
+.cdx-portal .cdp-bar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	gap: 0.5rem 0.75rem;
+	margin-block: 1rem;
+	padding: 0.875rem 1rem;
+	border: 1px solid var(--cd-border);
+	border-radius: 0.75rem;
+	background: var(--cd-surface);
+}
+
+.cdx-portal .cdp-bar input[type="search"] {
+	flex: 1 1 14rem;
+}
+
+.cdx-portal .cdp-bar select {
+	inline-size: auto;
+}
+
+.cdx-portal .cdp-bar label {
+	margin: 0;
+	font-size: 0.8125rem;
+}
+
+.cdx-portal .cdp-bar button {
+	margin-inline-start: auto;
+}
+
+.cdx-portal .cdp-list {
+	display: grid;
+	padding: 0;
+	overflow: hidden;
+	border: 1px solid var(--cd-border);
+	border-radius: 0.75rem;
+	background: var(--cd-surface);
+	list-style: none;
+}
+
+.cdx-portal .cdp-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.25rem 1rem;
+	padding: 0.75rem 1rem;
+	color: var(--cd-text-muted);
+}
+
+.cdx-portal .cdp-item + .cdp-item {
+	border-block-start: 1px solid var(--cd-border);
+}
+
+.cdx-portal .cdp-link {
+	min-height: 0;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: var(--cd-text);
+	text-align: start;
+	white-space: normal;
+}
+
+.cdx-portal .cdp-link:hover {
+	background: none;
+	color: var(--cd-accent-text);
+}
+
+.cdx-portal .cdp-unread {
+	color: var(--cd-accent-text);
+}
+
+.cdx-portal .cdp-meta {
+	margin-block-start: 0.375rem;
+	color: var(--cd-text-muted);
+}
+
+/* The email-code sign-in. */
+.cdx-portal .cdp-code p {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	gap: 0.5rem;
+}
+
+.cdx-portal .cdp-code label {
+	inline-size: 100%;
+	margin: 0;
+}
+
+.cdx-portal .cdp-code input {
+	flex: 1 1 12rem;
+	inline-size: auto;
+}
+
+.cdx-signin .cdp-code {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: none;
+}
+
+/* One request: the conversation as a chat (the customer on the end side, the team on the start side). */
+.cdx-portal .cdp-msg {
+	inline-size: fit-content;
+	max-inline-size: min(85%, 46rem);
+	margin-block: 0.625rem;
+	padding: 0.625rem 0.875rem;
+	border: 1px solid var(--cd-border);
+	border-radius: 0.875rem;
+	background: var(--cd-surface);
+}
+
+.cdx-portal .cdp-msg-team {
+	border-start-start-radius: 0.25rem;
+	background: var(--cd-surface-sunken);
+}
+
+.cdx-portal .cdp-msg-customer {
+	margin-inline-start: auto;
+	border-color: transparent;
+	border-start-end-radius: 0.25rem;
+	background: var(--cd-accent-subtle);
+}
+
+.cdx-portal .cdp-msg > p:first-child {
+	margin-block-end: 0.25rem;
+	color: var(--cd-text-muted);
+	font-size: 0.75rem;
+}
+
+.cdx-portal .cdp-msg > p:first-child strong {
+	margin-inline-end: 0.375rem;
+	color: var(--cd-text);
+	font-size: 0.8125rem;
+}
+
+.cdx-portal .cdp-msg ul {
+	margin-block-start: 0.5rem;
+	padding-inline-start: 1.125rem;
+}
+
+.cdx-portal :is(.cdp-details, .cdp-rate, .cdp-code, .cdp-notice, .cdp-orders, .cdp-records),
+.cdx-portal section[aria-labelledby="cdp-detail"] > form {
+	margin-block: 1rem;
+	padding: 1rem;
+	border: 1px solid var(--cd-border);
+	border-radius: 0.75rem;
+	background: var(--cd-surface);
+}
+
+.cdx-portal :is(.cdp-details, .cdp-rate, .cdp-code) > * + *,
+.cdx-portal section[aria-labelledby="cdp-detail"] > form > * + * {
+	margin-block-start: 0.75rem;
+}
+
+.cdx-portal .cdp-details dl {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+	gap: 0.75rem;
+}
+
+.cdx-portal .cdp-details dt {
+	color: var(--cd-text-muted);
+	font-size: 0.8125rem;
+}
+
+.cdx-portal .cdp-rate p:nth-of-type(2) {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+
+.cdx-portal .cdp-rate button[aria-pressed="true"] {
+	border-color: var(--cd-accent);
+	background: var(--cd-accent-subtle);
+}
+
+.cdx-portal .cdp-notice {
+	border-inline-start: 4px solid var(--cd-info);
+}
+
+.cdx-portal .cdp-notice-incident {
+	border-inline-start-color: var(--cd-warning);
+}
+
+.cdx-portal .cdp-help ul {
+	display: grid;
+	gap: 0.5rem;
+	margin-block-start: 0.5rem;
+	padding-inline-start: 1.125rem;
+}
+
+.cdx-portal .cdp-help h3 {
+	margin-block-start: 0.875rem;
+	font-size: 0.875rem;
+}
+
+/* The request form (new request) in a card: the form script's own class names. */
+/* stylelint-disable selector-class-pattern */
+.cdx-portal .cliedesk-request__form {
+	display: grid;
+	gap: 0.875rem;
+	max-inline-size: 48rem;
+	padding: 1.25rem;
+	border: 1px solid var(--cd-border);
+	border-radius: 0.75rem;
+	background: var(--cd-surface);
+}
+
+.cdx-portal .cliedesk-request__row {
+	margin: 0;
+}
+
+.cdx-portal .cliedesk-request__row > br {
+	display: none;
+}
+
+.cdx-portal .cliedesk-request__error {
+	color: var(--cd-danger);
+}
+
+/* stylelint-enable selector-class-pattern */
+
+.cdx-portal .screen-reader-text {
+	position: absolute;
+	inline-size: 1px;
+	block-size: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
+/* ----- Smaller screens: one column; on phones the rail is a bottom bar ----- */
+@media (max-width: 1023px) {
+
+	.cdx-split {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.cdx-stats {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 767px) {
+
+	.cdx-shell {
+		flex-direction: column;
+	}
+
+	.cdx-rail {
+		position: fixed;
+		inset: auto 0 0;
+		z-index: 10;
+		flex-direction: row;
+		justify-content: space-around;
+		inline-size: auto;
+		block-size: auto;
+		padding: 0.25rem 0.25rem calc(0.25rem + env(safe-area-inset-bottom));
+		border-block-start: 1px solid var(--cd-border);
+		border-inline-end: 0;
+	}
+
+	.cdx-rail-brand {
+		display: none;
+	}
+
+	.cdx-rail-item {
+		flex: 1;
+	}
+
+	.cdx-top {
+		padding-inline: 1rem;
+	}
+
+	.cdx-main {
+		padding: 1rem 1rem 5.5rem;
+	}
+
+	.cdx-portal .cdp-msg {
+		max-inline-size: 92%;
+	}
+}
+
+/* Headings take focus on each view change (for screen readers), without a ring. */
+:is(.cdx-auth, .cdx-portal) [tabindex="-1"]:focus {
+	outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+	:is(.cdx-auth, .cdx-portal) * {
+		scroll-behavior: auto;
+	}
+}

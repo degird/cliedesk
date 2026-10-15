@@ -1,0 +1,212 @@
+/*
+ * Cliedesk design tokens (plan.frontend-ux.md §7). Three layers: primitives, semantic (per theme), component.
+ * Defined on .cliedesk-html / .cliedesk-app, never :root, so nothing leaks if this CSS is loaded elsewhere.
+ * Brand scale: #2861E6 is blue-600; other steps generated in OKLCH at hue 263.4° (§7.2.1).
+ * Every semantic text/background pair is checked by app/scripts/check-contrast.mjs (WCAG 2.2 AA).
+ */
+
+.cliedesk-html,
+.cliedesk-app {
+	/* Primitives: brand */
+	--cd-blue-50: #f3f7fe;
+	--cd-blue-100: #e4edff;
+	--cd-blue-200: #cbddff;
+	--cd-blue-300: #a7c4fe;
+	--cd-blue-400: #75a2fe;
+	--cd-blue-500: #4880f8;
+	--cd-blue-600: #2861e6;
+	--cd-blue-700: #2653ba;
+	--cd-blue-800: #1e4293;
+	--cd-blue-900: #193571;
+	--cd-blue-950: #0f214a;
+
+	/* Primitives: neutral (blue-tinted) */
+	--cd-neutral-50: #f9fafc;
+	--cd-neutral-100: #f2f4f8;
+	--cd-neutral-200: #e3e6ed;
+	--cd-neutral-300: #cfd4de;
+	--cd-neutral-400: #9da5b3;
+	--cd-neutral-500: #6c7585;
+	--cd-neutral-600: #4d5566;
+	--cd-neutral-700: #374050;
+	--cd-neutral-800: #222937;
+	--cd-neutral-900: #131823;
+	--cd-neutral-950: #0a0e17;
+
+	/* Semantic: light */
+	--cd-bg: #f9fafc;
+	--cd-surface: #fff;
+	--cd-surface-raised: #fff;
+	--cd-surface-sunken: #f2f4f8;
+	--cd-surface-selected: #f3f7fe;
+	--cd-overlay: rgb(19 24 35 / 45%);
+	--cd-border: #e3e6ed;
+	--cd-border-strong: #7f8695;
+	--cd-text: #131823;
+	--cd-text-muted: #4d5566;
+	--cd-text-subtle: #616979;
+	--cd-text-disabled: #9da5b3;
+	--cd-text-on-accent: #fff;
+	--cd-accent: #2861e6;
+	--cd-accent-hover: #2653ba;
+	--cd-accent-active: #1e4293;
+	--cd-accent-text: #2861e6;
+	--cd-accent-subtle: #f3f7fe;
+	--cd-accent-subtle-hover: #e4edff;
+	--cd-focus: #2861e6;
+	--cd-pro-bg: #e4edff;
+	--cd-pro-text: #1e4293;
+
+	/* Status: light (fg = text/icons, solid = filled with white text) */
+	--cd-success: #057836;
+	--cd-success-solid: #00823a;
+	--cd-success-subtle: #eefbf0;
+	--cd-success-border: #b1dfb9;
+	--cd-warning: #8a5601;
+	--cd-warning-solid: #955e02;
+	--cd-warning-subtle: #fff5ea;
+	--cd-warning-border: #efca9f;
+	--cd-danger: #a83630;
+	--cd-danger-solid: #ba3630;
+	--cd-danger-subtle: #fff4f2;
+	--cd-danger-border: #fcc0b8;
+	--cd-info: #066d90;
+	--cd-info-solid: #07769c;
+	--cd-info-subtle: #eef9ff;
+	--cd-info-border: #a2daf6;
+
+	/* Typography */
+	--cd-font-scale: 1;
+	--cd-font-sans: "Inter Variable", system-ui, -apple-system, "Segoe UI", roboto, "Noto Sans", "Helvetica Neue", arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+	--cd-font-system: system-ui, -apple-system, "Segoe UI", roboto, "Noto Sans", "Helvetica Neue", arial, sans-serif;
+	--cd-font-mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", menlo, consolas, monospace;
+	--cd-font: var(--cd-font-system);
+
+	/* Spacing (4 px base), radius, elevation */
+	--cd-space: 0.25rem;
+	--cd-radius-scale: 1;
+	--cd-radius-xs: calc(2px * var(--cd-radius-scale));
+	--cd-radius-sm: calc(4px * var(--cd-radius-scale));
+	--cd-radius-md: calc(6px * var(--cd-radius-scale));
+	--cd-radius-lg: calc(8px * var(--cd-radius-scale));
+	--cd-radius-xl: calc(12px * var(--cd-radius-scale));
+	--cd-radius-full: 9999px;
+	--cd-shadow-1: 0 1px 2px rgb(19 24 35 / 6%);
+	--cd-shadow-2: 0 4px 12px rgb(19 24 35 / 8%), 0 1px 2px rgb(19 24 35 / 6%);
+	--cd-shadow-3: 0 16px 40px rgb(19 24 35 / 16%);
+	--cd-raised-outline: transparent;
+
+	/* Layers */
+	--cd-z-sticky: 10;
+	--cd-z-popover: 1000;
+	--cd-z-drawer: 1100;
+	--cd-z-dialog: 1200;
+	--cd-z-toast: 1300;
+	--cd-z-tooltip: 1400;
+
+	/* Motion */
+	--cd-duration-fast: 100ms;
+	--cd-duration: 150ms;
+	--cd-duration-slow: 250ms;
+	--cd-ease: cubic-bezier(0.2, 0, 0, 1);
+	--cd-ease-exit: cubic-bezier(0.4, 0, 1, 1);
+
+	/* Component tokens (density: comfortable) */
+	--cd-control-h: 2rem;
+	--cd-control-h-sm: 1.75rem;
+	--cd-control-h-lg: 2.5rem;
+	--cd-control-px: 0.75rem;
+	--cd-row-height: 72px;
+	--cd-table-row-height: 44px;
+	--cd-rail-w: 4.5rem;
+	--cd-sidebar-w: 15rem;
+	--cd-topbar-h: 3.5rem;
+}
+
+/* Semantic: dark */
+.cliedesk-html[data-theme="dark"],
+[data-theme="dark"] .cliedesk-app {
+	--cd-bg: #0b0f17;
+	--cd-surface: #121720;
+	--cd-surface-raised: #1a1f2a;
+	--cd-surface-sunken: #070a11;
+	--cd-surface-selected: #0f214a;
+	--cd-overlay: rgb(0 0 0 / 60%);
+	--cd-border: #2b303c;
+	--cd-border-strong: #656d7c; /* plan: #616978 (2.98:1 on raised); adjusted to 3.17:1 */
+	--cd-text: #eceff4;
+	--cd-text-muted: #b9bec8;
+	--cd-text-subtle: #9ba2ae;
+	--cd-text-disabled: #5c6372;
+	--cd-text-on-accent: #fff;
+	--cd-accent: #2861e6;
+	--cd-accent-hover: #2653ba;
+	--cd-accent-active: #1e4293;
+	--cd-accent-text: #a7c4fe;
+	--cd-accent-subtle: #0f214a;
+	--cd-accent-subtle-hover: #193571;
+	--cd-focus: #75a2fe;
+	--cd-pro-bg: #0f214a;
+	--cd-pro-text: #a7c4fe;
+	--cd-success: #7cd591;
+	--cd-success-subtle: #0d2814;
+	--cd-success-border: #295935;
+	--cd-warning: #f3ae58;
+	--cd-warning-subtle: #311d03;
+	--cd-warning-border: #694413;
+	--cd-danger: #ffa196;
+	--cd-danger-subtle: #361714;
+	--cd-danger-border: #733a35;
+	--cd-info: #58ccff;
+	--cd-info-subtle: #022634;
+	--cd-info-border: #0a5470;
+	--cd-shadow-1: 0 1px 2px rgb(0 0 0 / 40%);
+	--cd-shadow-2: 0 4px 12px rgb(0 0 0 / 45%);
+	--cd-shadow-3: 0 16px 40px rgb(0 0 0 / 60%);
+	--cd-raised-outline: var(--cd-border);
+	color-scheme: dark;
+}
+
+.cliedesk-html[data-font="inter"],
+[data-font="inter"] .cliedesk-app {
+	--cd-font: var(--cd-font-sans);
+}
+
+/* Density: compact (§7.8) */
+.cliedesk-html[data-density="compact"],
+[data-density="compact"] .cliedesk-app {
+	--cd-control-h: 1.75rem;
+	--cd-control-h-lg: 2rem;
+	--cd-control-px: 0.5rem;
+	--cd-row-height: 40px;
+	--cd-table-row-height: 32px;
+}
+
+/* Touch targets (§7.5) */
+@media (pointer: coarse) {
+
+	.cliedesk-html,
+	.cliedesk-app {
+		--cd-control-h: 2.75rem;
+		--cd-control-h-sm: 2.75rem;
+		--cd-control-h-lg: 2.75rem;
+	}
+}
+
+/* Reduced motion: the OS setting or the user preference (data-motion="reduce"). */
+@media (prefers-reduced-motion: reduce) {
+
+	.cliedesk-html:not([data-motion="no-preference"]),
+	.cliedesk-html:not([data-motion="no-preference"]) .cliedesk-app {
+		--cd-duration-fast: 0ms;
+		--cd-duration: 0ms;
+		--cd-duration-slow: 0ms;
+	}
+}
+
+.cliedesk-html[data-motion="reduce"],
+[data-motion="reduce"] .cliedesk-app {
+	--cd-duration-fast: 0ms;
+	--cd-duration: 0ms;
+	--cd-duration-slow: 0ms;
+}

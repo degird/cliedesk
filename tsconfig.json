@@ -1,0 +1,38 @@
+{
+	"compilerOptions": {
+		"target": "ES2022",
+		"lib": [
+			"ES2022",
+			"DOM",
+			"DOM.Iterable"
+		],
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+		"jsx": "react-jsx",
+		"strict": true,
+		"noUncheckedIndexedAccess": true,
+		"noImplicitOverride": true,
+		"noFallthroughCasesInSwitch": true,
+		"exactOptionalPropertyTypes": false,
+		"isolatedModules": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"resolveJsonModule": true,
+		"noEmit": true,
+		"paths": {
+			"@cliedesk/data": [
+				"./app/packages/data/index.ts"
+			],
+			"@cliedesk/ui": [
+				"./app/packages/ui/index.ts"
+			],
+			"@cliedesk/app": [
+				"./app/packages/app/index.ts"
+			]
+		}
+	},
+	"include": [
+		"app/**/*.ts",
+		"app/**/*.tsx"
+	]
+}
